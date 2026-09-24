@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honeytrap — a Jev social-engineering trap game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="scan"></div>
+<main class="wrap">
+  <div id="brain-pill" class="pill">checking…</div>
+
+  <div class="layout">
+    <div class="game-col">
+      <section id="screen-setup" class="screen">
+        <div class="logo">🍯 HONEYTRAP</div>
+        <p class="tag">Jev is the attacker. You are the target.<br>
+        Each round it picks a <strong>vector</strong>, a <strong>victim</strong>, and a <strong>lure</strong> —
+        then learns who falls for what, like Mastermind.<br>
+        Trust it or report it. Choose wrong and you get phished.</p>
+        <div class="form">
+          <label class="flabel">Players (2–6, one screen, pass-and-play)</label>
+          <div id="player-inputs"></div>
+          <button class="btn ghost sm" onclick="addPlayer()">+ add player</button>
+          <div class="row2">
+            <div>
+              <label class="flabel">Rounds</label>
+              <select id="rounds">
+                <option>4</option><option selected>6</option><option>8</option><option>10</option>
+              </select>
+            </div>
+            <div>
+              <label class="flabel">Company</label>
+              <input id="company" type="text" maxlength="40" placeholder="Nimbus Fintech">
+            </div>
+          </div>
+          <button class="btn gold" onclick="startGame()">Start the trap</button>
+          <p class="hint">Scoring: spot an attack <b>+2</b> · fall for one <b>−3</b> ·<br>
+          correctly trust a legit message <b>+1</b> · false alarm <b>−1</b>.<br>
+          Run with <code>TYPESAFE_API_KEY</code> set for Jev; otherwise the local brain attacks.</p>
+        </div>
+      </section>
+
+      <section id="screen-loading" class="screen hidden">
+        <div class="terminal">Jev is crafting the lure<span class="blink">_</span></div>
+      </section>
+
+      <section id="screen-round" class="screen hidden">
+        <p id="round-progress" class="progress"></p>
+        <div id="scenario-card"></div>
+        <div class="votebox">
+          <p id="voter-label" class="voter"></p>
+          <p id="votes-progress" class="progress small"></p>
+          <div class="btnrow">
+            <button class="btn yes" onclick="vote('trust')">✅ Trust it</button>
+            <button class="btn no" onclick="vote('report')">🚨 Report attack</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-reveal" class="screen hidden">
+        <div id="reveal-banner" class="banner"></div>
+        <p id="reveal-sub" class="tag"></p>
+        <h3 id="flags-title" class="flags-title"></h3>
+        <ul id="flags-list" class="flags"></ul>
+        <h3 class="flags-title">🗳️ How everyone voted</h3>
+        <div id="votes-list" class="votes"></div>
+        <button class="btn gold" onclick="nextRound()">Next round</button>
+      </section>
+
+      <section id="screen-gameover" class="screen hidden">
+        <div class="logo small">🏆 GAME OVER</div>
+        <h2 id="winner" class="winner"></h2>
+        <div id="board" class="board"></div>
+        <p id="jev-stats" class="tag"></p>
+        <button class="btn gold" onclick="location.reload()">Play again</button>
+      </section>
+    </div>
+
+    <aside class="jev-col">
+      <h3>🧠 Jev's mind <span id="jev-count" class="count"></span></h3>
+      <p class="jev-sub">The attacker's every decision, live.</p>
+      <div id="jev-log"><p class="jev-empty">Press start — Jev is waiting.</p></div>
+    </aside>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
