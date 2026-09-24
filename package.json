@@ -1,0 +1,1 @@
+{"dependencies":{"express":"^4.19.2"},"description":"Honeytrap: a multiplayer social-engineering trap game where Jev plays the attacker","license":"MIT","main":"server.js","name":"honeytrap","scripts":{"start":"node server.js"},"version":"1.0.0"}
